@@ -211,6 +211,14 @@ Function InstallExpressLukeProgs {
 	./OOSU10.exe ooshutup10.cfg /quiet
 }
 
+Function HiddenFeatures {
+	Write-Output "Installing Hidden Features"
+	Import-Module BitsTransfer
+	Start-BitsTransfer -Source "https://github.com/ExpressLuke/win10script/raw/master/ViVeTool.exe" -Destination ViVeTool.exe
+	Start-BitsTransfer -Source "https://github.com/ExpressLuke/win10script/raw/master/Albacore.ViVe.dll" -Destination Albacore.ViVe.dll
+	./ViVeTool.exe addconfig 23615618 2	
+}
+
 Function InstallVCRedists {
 	Write-Output "Installing Visual C++ Redistributable Packages"
 	choco install vcredist-all -y
