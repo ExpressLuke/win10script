@@ -31,6 +31,7 @@ $tweaks = @(
 
 	### External Program Setup
 	"InstallExpressLukeProgs", #REQUIRED FOR OTHER PROGRAM INSTALLS!
+	"HiddenFeatures",
 	"InstallVCRedists",
 	"InstallJava",
 	"InstallAndroidSDK",
