@@ -12,9 +12,9 @@
 #
 #	Addition: One command to rule them all, One command to find it, and One command to Run it! 
 #
-#     > powershell -nop -c "iex(New-Object Net.WebClient).DownloadString('https://git.io/JJ8R4')"
+#     > powershell -nop -c "iex(New-Object Net.WebClient).DownloadString('https://git.io/JJuGe')"
 #
-#	Chris Titus Additions:
+#	Chris Titus / ExpressLuke Additions:
 #
 #	- Dark Mode
 #	- One Command to launch and run
@@ -30,11 +30,21 @@ $tweaks = @(
 	"RequireAdmin",
 
 	### External Program Setup
-	"InstallTitusProgs", #REQUIRED FOR OTHER PROGRAM INSTALLS!
-	"InstallAdobe",
+	"InstallExpressLukeProgs", #REQUIRED FOR OTHER PROGRAM INSTALLS!
+	"InstallVCRedists",
+	"InstallJava",
+	"InstallAndroidSDK",
+	"InstallMinecraft",
+	"InstallEdge",
+	"InstallWindowsTerminal",
 	"Install7Zip",
-	"InstallNotepadplusplus",
-	"InstallMediaPlayerClassic",
+	"InstallVLC",
+	"InstallVSCode",
+	"InstallTelegram",
+	"InstallDiscord",
+	"InstallPicoTorrent",
+	"InstallAdobeReader",
+	
 
 	### Windows Apps
 	"DebloatAll",
@@ -103,14 +113,14 @@ $tweaks = @(
 	"DisableActionCenter",          # "EnableActionCenter",
 	"DisableLockScreen",            # "EnableLockScreen",
 	"DisableLockScreenRS1",       # "EnableLockScreenRS1",
-	# "HideNetworkFromLockScreen",    # "ShowNetworkOnLockScreen",
+	"HideNetworkFromLockScreen",    # "ShowNetworkOnLockScreen",
 	# "HideShutdownFromLockScreen",   # "ShowShutdownOnLockScreen",
 	"DisableStickyKeys",            # "EnableStickyKeys",
 	"ShowTaskManagerDetails"        # "HideTaskManagerDetails",
 	"ShowFileOperationsDetails",    # "HideFileOperationsDetails",
 	"DisableFileDeleteConfirm",	# "EnableFileDeleteConfirm",    
-	#"HideTaskbarSearch",
-	"ShowTaskbarSearchIcon",      # "ShowTaskbarSearchBox",
+	"HideTaskbarSearch",
+	#"ShowTaskbarSearchIcon",      # "ShowTaskbarSearchBox",
 	"HideTaskView",                 # "ShowTaskView",
 	# "ShowSmallTaskbarIcons",        # "ShowLargeTaskbarIcons",
 	# "SetTaskbarCombineWhenFull",    # "SetTaskbarCombineNever",     # "SetTaskbarCombineAlways",
@@ -127,7 +137,7 @@ $tweaks = @(
 
 	### Explorer UI Tweaks ###
 	"ShowKnownExtensions",          # "HideKnownExtensions",
-	# "ShowHiddenFiles",              # "HideHiddenFiles",
+	"ShowHiddenFiles",              # "HideHiddenFiles",
 	"HideSyncNotifications"         # "ShowSyncNotifications",
 	# "HideRecentShortcuts",          # "ShowRecentShortcuts",
 	"SetExplorerThisPC",            # "SetExplorerQuickAccess",
@@ -158,16 +168,16 @@ $tweaks = @(
 	# "UninstallWindowsStore",      # "InstallWindowsStore",
 	# "DisableXboxFeatures",          # "EnableXboxFeatures",
 	"DisableAdobeFlash",            # "EnableAdobeFlash",
-	"InstallMediaPlayer", 		# "UninstallMediaPlayer",
+	"UninstallMediaPlayer",         # "InstallMediaPlayer", 		
 	"UninstallInternetExplorer",  # "InstallInternetExplorer",
 	"UninstallWorkFolders",       # "InstallWorkFolders",
-	"InstallLinuxSubsystem",      # "UninstallLinuxSubsystem",
+	#"InstallLinuxSubsystem",      # "UninstallLinuxSubsystem",
 	# "InstallHyperV",              # "UninstallHyperV",
 	"SetPhotoViewerAssociation",    # "UnsetPhotoViewerAssociation",
 	"AddPhotoViewerOpenWith",       # "RemovePhotoViewerOpenWith",
 	"InstallPDFPrinter",		# "UninstallPDFPrinter",
-	# "UninstallXPSPrinter",          # "InstallXPSPrinter",
-	# "RemoveFaxPrinter",             # "AddFaxPrinter",
+	"UninstallXPSPrinter",          # "InstallXPSPrinter",
+	"RemoveFaxPrinter",             # "AddFaxPrinter",
 
 	### Server Specific Tweaks ###
 	# "HideServerManagerOnLogin",   # "ShowServerManagerOnLogin",
@@ -179,7 +189,7 @@ $tweaks = @(
 
 	### Unpinning ###
 	"UnpinStartMenuTiles",
-	#"UnpinTaskbarIcons",
+	"UnpinTaskbarIcons",
 
 	### Auxiliary Functions ###
 	"WaitForKey"
@@ -187,44 +197,87 @@ $tweaks = @(
 )
 
 #########
-# Recommended Titus Programs
+# Recommended ExpressLuke Programs
 #########
 
-Function InstallTitusProgs {
+Function InstallExpressLukeProgs {
 	Write-Output "Installing Chocolatey"
 	Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 	choco install chocolatey-core.extension -y
 	Write-Output "Running O&O Shutup with Recommended Settings"
 	Import-Module BitsTransfer
-	Start-BitsTransfer -Source "https://raw.githubusercontent.com/ChrisTitusTech/win10script/master/ooshutup10.cfg" -Destination ooshutup10.cfg
+	Start-BitsTransfer -Source "https://raw.githubusercontent.com/ExpressLuke/win10script/master/ooshutup10.cfg" -Destination ooshutup10.cfg
 	Start-BitsTransfer -Source "https://dl5.oo-software.com/files/ooshutup10/OOSU10.exe" -Destination OOSU10.exe
 	./OOSU10.exe ooshutup10.cfg /quiet
 }
 
-Function InstallAdobe {
-	Write-Output "Installing Adobe Acrobat Reader"
-	choco install adobereader -y
+Function InstallVCRedists {
+	Write-Output "Installing Visual C++ Redistributable Packages"
+	choco install vcredist-all -y
 }
 
 Function InstallJava {
 	Write-Output "Installing Java"
 	choco install jre8 -y
+	choco install jdk8 -y
+}
+
+Function InstallAndroidSDK {
+	Write-Output "Installing Android SDK Tools"
+	choco install android-sdk -y
+}
+
+Function InstallMinecraft {
+	Write-Output "Installing Minecraft"
+	choco install minecraft -y
+}
+
+Function InstallEdge {
+	Write-Output "Installing Microsoft Edge (Chromium)"
+	choco install microsoft-edge -y
+}
+
+Function InstallWindowsTerminal {
+	Write-Output "Installing Windows Terminal"
+	choco install microsoft-windows-terminal -y
 }
 
 Function Install7Zip {
-	Write-Output "Installing 7-Zip"
-	choco install 7zip -y
+	Write-Output "Installing 7-Zip File Manager"
+	choco install 7zip.install -y
 }
 
-Function InstallNotepadplusplus {
-	Write-Output "Installing Notepad++"
-	choco install notepadplusplus -y
+Function InstallVLC {
+	Write-Output "Installing VLC Media Player"
+	choco install vlc -y
 }
 
-Function InstallMediaPlayerClassic {
-	Write-Output "Installing Media Player Classic (VLC Alternative)"
-	choco install mpc-hc -y
+Function InstallVSCode {
+	Write-Output "Installing Visual Studio Code"
+	choco install vscode -y
 }
+
+Function InstallTelegram {
+	Write-Output "Installing Telegram"
+	choco install telegram.install -y
+}
+
+Function InstallDiscord {
+	Write-Output "Installing Discord"
+	choco install discord -y
+}
+
+Function InstallPicoTorrent {
+	Write-Output "Installing PicoTorrent"
+	choco install picotorrent -y
+}
+
+Function InstallAdobeReader {
+	Write-Output "Installing Adobe Reader DC"
+	choco install adobereader -y
+}
+
+
 
 ##########
 # Privacy Tweaks
@@ -2453,7 +2506,7 @@ Function RequireAdmin {
 
 # Wait for key press
 Function WaitForKey {
-	Write-Output "Press any key to continue..."
+	Write-Output "Press any key to continue and restart..."
 	[Console]::ReadKey($true) | Out-Null
 }
 
